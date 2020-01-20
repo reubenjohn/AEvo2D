@@ -39,6 +39,10 @@ public static class Utils
             array[i] = UnityEngine.Random.Range(min, max);
     }
 
+    public static float Clamp(this float val, float min, float max) => Mathf.Clamp(val, min, max);
+
+    public static float ClampNormal(this float val) => Mathf.Clamp(val, -1f, 1f);
+
     public static void DestroyChildren(this Transform transform)
     {
         foreach (Transform childTransform in transform)

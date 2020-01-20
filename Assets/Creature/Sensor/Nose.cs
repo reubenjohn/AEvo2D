@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Nose : MonoBehaviour, ISensor
 {
-    public float saturation = .1f;
+    [SerializeField] private float saturation = .1f;
 
     public Color inactiveColor = Color.grey, activeColor = Color.red;
     private Environment environment;
@@ -40,7 +40,7 @@ public class Nose : MonoBehaviour, ISensor
     public void OnRefresh()
     {
         for (int i = 0; i < receptors.Length; i++)
-            receptors[i] = Mathf.Clamp(receptors[i], -1f, 1f);
+            receptors[i] = (receptors[i] * saturation).ClampNormal();
         spriteRenderer.color = Color.Lerp(inactiveColor, activeColor, receptors.Sum());
     }
 
