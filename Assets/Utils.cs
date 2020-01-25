@@ -43,6 +43,8 @@ public static class Utils
 
     public static float ClampNormal(this float val) => Mathf.Clamp(val, -1f, 1f);
 
+    public static float SignedToUnsignUnitFraction(this float val) => (val + 1f) / 2f;
+
     public static void DestroyChildren(this Transform transform)
     {
         foreach (Transform childTransform in transform)

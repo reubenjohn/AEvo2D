@@ -169,9 +169,10 @@ MonoBehaviour:
   connectionsTransform: {fileID: 4681530872836441778}
   connection: {fileID: 8146009852439824418, guid: eb28cd970be40f344b15a89fa5dbbe49,
     type: 3}
-  fromColor: {r: 0.8962264, g: 0.5894683, b: 0.57916516, a: 1}
-  toColor: {r: 0.5090335, g: 0.8773585, b: 0.55450565, a: 1}
+  fromColor: {r: 1, g: 0, b: 0, a: 1}
+  toColor: {r: 0, g: 1, b: 0, a: 1}
   activation: 0
+  weights: []
 --- !u!1001 &4448052272659375849
 PrefabInstance:
   m_ObjectHideFlags: 0

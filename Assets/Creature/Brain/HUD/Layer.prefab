@@ -74,5 +74,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622f09cce5e428742a8ccf1732c6d22e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nNeurons: 5
   neuron: {fileID: 2110211872514991751, guid: 857f0993fabc0c74998c105df9e0bafd, type: 3}
+  inputTensor1DHUDTransform: {fileID: 0}

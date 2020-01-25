@@ -57,14 +57,14 @@ public class NeuronHUD : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        neuronImage.color = Color.Lerp(fromColor, toColor, .5f + .5f * activation);
+        neuronImage.color = Color.Lerp(fromColor, toColor, activation.SignedToUnsignUnitFraction());
         activationText.text = activation.ToString("0.00");
         if (weights.Length > 0)
         {
             Image[] lines = connectionsTransform.GetComponentsInChildren<Image>();
             for (int i = 0; i < lines.Length; i++)
             {
-                Color color = Color.Lerp(fromColor, toColor, .5f + .5f * inputLayerTransform.GetChild(i).GetComponent<NeuronHUD>().activation);
+                Color color = Color.Lerp(fromColor, toColor, inputLayerTransform.GetChild(i).GetComponent<NeuronHUD>().activation.SignedToUnsignUnitFraction());
                 color.a = weights[i];
                 lines[i].color = color;
             }

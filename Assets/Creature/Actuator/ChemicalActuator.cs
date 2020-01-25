@@ -23,9 +23,9 @@ public class ChemicalActuator : MonoBehaviour, IActuator
 
     public void Act(ArraySegment<float> activations)
     {
-        IEnumerable<Recipe> chosenRecipes = environment.GetVoluntaryRecipes()
-        .Where((recipe, recipeI) => activations.Array[activations.Offset + recipeI] > UnityEngine.Random.Range(0, 1));
-        List<float> chosenRecipeYields = chosenRecipes.Select(recipe => chemicalBag.Convert(recipe)).ToList();
+        List<float> chosenRecipeYields = environment.GetVoluntaryRecipes()
+            .Select((recipe, recipeI) => chemicalBag.Convert(recipe, activations.Array[activations.Offset + recipeI].SignedToUnsignUnitFraction()))
+            .ToList();
         // Debug.Log(gameObject.name + " choosen recipe yields: " + chosenRecipes.Zip(chosenRecipeYields, (recipe, yield) => recipe.ToString() + "(" + yield + ")").ToString<string>());
     }
 

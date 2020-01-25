@@ -48,9 +48,9 @@ public class ChemicalBag : MonoBehaviour
 
     public Mixture ToMixture() => flask.Copy();
 
-    internal float Convert(Recipe recipe)
+    internal float Convert(Recipe recipe, float convertionFactor = 1f)
     {
-        return flask.Convert(environment.recipeBook[recipe]);
+        return flask.Convert(environment.recipeBook[recipe], convertionFactor);
     }
 
     internal static float TransferMax(ChemicalBag destination, ChemicalBag source, Mixture transferMixture)

@@ -113,8 +113,8 @@ public class MixtureDictionary : Dictionary<Substance, float>
     {
         return new Mixture(this);
     }
-    
-    public static Reaction operator >(MixtureDictionary a, MixtureDictionary b) => new Reaction(a,b);
+
+    public static Reaction operator >(MixtureDictionary a, MixtureDictionary b) => new Reaction(a, b);
     public static Reaction operator <(MixtureDictionary a, MixtureDictionary b) => throw new System.NotImplementedException();
 }
 
@@ -159,9 +159,10 @@ public class Flask : Mixture
         .Min();
     }
 
-    internal float Convert(Reaction reaction)
+    internal float Convert(Reaction reaction, float convertionFactor = 1f)
     {
-        float yield = MaxYield(this, reaction.ingredients);
+        System.Diagnostics.Trace.Assert(0 <= convertionFactor && convertionFactor <= 1f, "Reactions convertion factor must lie in range [0, 1]");
+        float yield = MaxYield(this, reaction.ingredients) * convertionFactor;
         Mixture transferMixture = reaction.change * yield;
 
         Take(reaction.ingredients * yield);
