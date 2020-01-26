@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class RandomSensor : MonoBehaviour, ISensor
 {
-    [SerializeField] private int nReceptors;
+    [SerializeField] public int nReceptors;
 
     private float[] receptors;
 

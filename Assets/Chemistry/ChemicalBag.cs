@@ -9,8 +9,8 @@ using UnityEngine.UIElements;
 
 public class ChemicalBag : MonoBehaviour
 {
-    [SerializeField] private Transform scaleTarget;
-    [SerializeField] private SubstanceMass[] initialMass;
+    [SerializeField] public Transform scaleTarget;
+    [SerializeField] public SubstanceMass[] initialMass;
 
     private Flask flask;
     private Environment environment;
@@ -34,11 +34,6 @@ public class ChemicalBag : MonoBehaviour
 
         rigidBody.mass = flask.Mass();
         UpdateLocalScaleIfEnabled();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 
     public float this[Substance key]
@@ -82,4 +77,6 @@ public class ChemicalBag : MonoBehaviour
     }
 
     public float ApproximateMass => rigidBody.mass;
+
+    public float ExactMass() => this.flask.Mass();
 }

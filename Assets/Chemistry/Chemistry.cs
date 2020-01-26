@@ -10,7 +10,8 @@ public enum Substance
     FAT, WASTE,
     SKIN_GROWTH_FACTOR, SKIN, TOXIN, VENOM, VENOM_GLANDS,
     VEGETATION, MEAT, VEGETATION_DIGESTIVE_ENZYME, MEAT_DIGESTIVE_ENZYME, OMNIVORE_INTERFERENCE,
-    FUEL_GLAND, CILIA, JET_FUEL, LEFT_FUEL, RIGHT_FUEL
+    FUEL_GLAND, CILIA, JET_FUEL, LEFT_FUEL, RIGHT_FUEL,
+    EGG, EGG_GROWTH_FACTOR, BABY, BABY_GROWTH_FACTOR, PREGNANCY_HORMONE, PREGNANCY_HORMONE_RESORBER
 }
 
 [Serializable]
@@ -18,6 +19,11 @@ public class SubstanceMass
 {
     public Substance substance;
     public float mass;
+}
+
+public static class SubstanceMassUtilities
+{
+    public static float TotalMass(this SubstanceMass[] substanceMasses) => substanceMasses.Sum(substanceMass => substanceMass.mass);
 }
 
 

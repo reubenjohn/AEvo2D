@@ -11,7 +11,7 @@ public abstract class Brain : MonoBehaviour
     private bool hudUpdateRequired = true;
 
 
-    public void Connect(ISensor[] sensors, IActuator[] actuators, int nOutputs)
+    public void Connect(ISensor[] sensors, IActuator[] actuators)
     {
         this.sensors = sensors;
         this.actuators = actuators;

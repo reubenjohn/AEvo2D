@@ -5,8 +5,8 @@ public class ChemicalBagSensor : MonoBehaviour, ISensor
 {
     [SerializeField] private float massSaturation = .01f;
     [SerializeField] private float saturation = .01f;
-    [SerializeField] private Substance[] substanceReceptors;
-    [SerializeField] private ChemicalBag chemicalBag;
+    [SerializeField] public Substance[] substanceReceptors;
+    [SerializeField] public ChemicalBag chemicalBag;
     [SerializeField] private bool senseMass = true;
 
     private Environment environment;

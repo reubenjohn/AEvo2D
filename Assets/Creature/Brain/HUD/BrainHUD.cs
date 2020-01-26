@@ -9,12 +9,13 @@ public class BrainHUD : MonoBehaviour
     {
         if (Selection.activeGameObject != null)
         {
-            if (Selection.activeGameObject.TryGetComponent<IBrainViewable>(out IBrainViewable newSelection))
+            if (Selection.activeGameObject.TryGetComponent<Creature>(out Creature newSelection))
             {
-                if (newSelection != selectedBrain)
+                IBrainViewable newlySelectedBrain = newSelection.GetComponentInChildren<IBrainViewable>();
+                if (newlySelectedBrain != selectedBrain)
                 {
-                    newSelection.ResetHUD(gameObject);
-                    selectedBrain = newSelection;
+                    newlySelectedBrain.ResetHUD(gameObject);
+                    selectedBrain = newlySelectedBrain;
                 }
                 selectedBrain.UpdateHUD(gameObject);
             }

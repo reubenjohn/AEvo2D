@@ -15,15 +15,6 @@ public class Environment : MonoBehaviour
 
     public RecipeBook recipeBook;
     public ChemicalBag chemicalBag;
-    public readonly Recipe[] involuntaryRecipes = new Recipe[] {
-        Recipe.AGE_SKIN,
-        Recipe.PROCESS_TOXIN,
-        Recipe.PROCESS_VENOM,
-        Recipe.DIGESTIVE_ENZYME_INTERFERENCE,
-        Recipe.JET_FORWARD,
-        Recipe.TURN_LEFT,
-        Recipe.TURN_RIGHT,
-    };
     private Recipe[] VoluntaryRecipes;
     public Substance[] odorousSubstances = new Substance[] {
         VEGETATION_DIGESTIVE_ENZYME, MEAT_DIGESTIVE_ENZYME,
@@ -37,12 +28,12 @@ public class Environment : MonoBehaviour
     }.ToMixture();
 
     public Creature[] creaturesToSpawn;
-    private Transform membersTransform;
+    public Transform MembersTransform { get; private set; }
 
     // Start is called before the first frame update
     void Start()
     {
-        membersTransform = transform.Find("Members");
+        MembersTransform = transform.Find("Members");
     }
 
     // Update is called once per frame
@@ -55,16 +46,6 @@ public class Environment : MonoBehaviour
                 // Instantiate(creature, new Vector3(UnityEngine.Random.Range(-8f, 8f), UnityEngine.Random.Range(-4f, 4f), 0), Quaternion.identity, membersTransform);
             }
         }
-    }
-
-    public Recipe[] GetVoluntaryRecipes()
-    {
-        if (VoluntaryRecipes == null)
-        {
-            VoluntaryRecipes = Enum.GetValues(typeof(Recipe)).Cast<Recipe>().Where(recipe => !involuntaryRecipes.Contains(recipe)).ToArray();
-            Debug.Log("Voluntary recipes: " + VoluntaryRecipes.ToString<Recipe>());
-        }
-        return VoluntaryRecipes;
     }
 
     internal Vector3 Scale(float mass) => Vector2.one * (float)Math.Sqrt(mass / this.massDensity);

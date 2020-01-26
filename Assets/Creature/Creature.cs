@@ -1,37 +1,56 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using static Substance;
 
 public class Creature : MonoBehaviour
 {
     private Environment environment;
     private Rigidbody2D rb;
-    private ChemicalBag chemicalBag;
+    public ChemicalBag chemicalBag;
+    private EggPouch eggPouch;
     private Brain brainConnection;
 
+    public string inheritedName;
+
     public static readonly Mixture WASTE_MIX = new MixtureDictionary { [Substance.WASTE] = 1f }.ToMixture();
+
+    private static readonly Recipe[] alwaysActiveRecipes = new Recipe[] {
+        Recipe.AGE_SKIN,
+        Recipe.PROCESS_TOXIN,
+        Recipe.PROCESS_VENOM,
+        Recipe.DIGESTIVE_ENZYME_INTERFERENCE,
+        Recipe.RESORB_PREGNANCY_HORMONE,
+    };
 
     // Start is called before the first frame update
     void Start()
     {
         environment = GetComponentInParent<Environment>();
-        rb = GetComponent<Rigidbody2D>();
-        chemicalBag = GetComponent<ChemicalBag>();
 
-        this.brainConnection = GetComponent<Brain>();
-        this.brainConnection.Connect(GetComponentsInChildren<ISensor>(), GetComponentsInChildren<IActuator>(), environment.GetVoluntaryRecipes().Length);
+        Transform body = transform.Find("Body");
+        rb = body.GetComponent<Rigidbody2D>();
+        chemicalBag = body.GetComponent<ChemicalBag>();
+
+        eggPouch = GetComponentInChildren<EggPouch>();
+
+        this.brainConnection = GetComponentInChildren<Brain>();
+        this.brainConnection.Connect(GetComponentsInChildren<ISensor>(), GetComponentsInChildren<IActuator>());
+
+        inheritedName = string.IsNullOrEmpty(inheritedName) ? gameObject.name : inheritedName;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Time.frameCount % 10 == 0)
+        if (Time.frameCount % 100 == 0)
         {
             brainConnection.Act();
 
-            chemicalBag.Convert(Recipe.AGE_SKIN);
+            foreach (var recipe in alwaysActiveRecipes)
+                chemicalBag.Convert(recipe);
 
             rb.AddTorque((chemicalBag.Convert(Recipe.TURN_RIGHT) - chemicalBag.Convert(Recipe.TURN_LEFT)) * environment.torqueImpulse, ForceMode2D.Impulse);
-            rb.AddForce(transform.up * chemicalBag.Convert(Recipe.JET_FORWARD) * environment.fuelImpulse, ForceMode2D.Impulse);
+            rb.AddForce(rb.transform.up * chemicalBag.Convert(Recipe.JET_FORWARD) * environment.fuelImpulse, ForceMode2D.Impulse);
 
             if (chemicalBag[WASTE] > environment.minimumGlobuleMass)
             {
@@ -52,6 +71,7 @@ public class Creature : MonoBehaviour
 
     private void Die()
     {
+        Debug.Log(gameObject.name + " died");
         ChemicalBag.Transfer(environment.chemicalBag, this.chemicalBag, this.chemicalBag.ToMixture());
         Destroy(gameObject);
     }
