@@ -10,7 +10,8 @@ public class Creature : MonoBehaviour
     private EggPouch eggPouch;
     private Brain brainConnection;
 
-    public string inheritedName;
+    [SerializeField] public GameObject meat;
+    [SerializeField] public string inheritedName;
 
     public static readonly Mixture WASTE_MIX = new MixtureDictionary { [Substance.WASTE] = 1f }.ToMixture();
 
@@ -72,7 +73,9 @@ public class Creature : MonoBehaviour
     private void Die()
     {
         Debug.Log(gameObject.name + " died");
-        ChemicalBag.Transfer(environment.chemicalBag, this.chemicalBag, this.chemicalBag.ToMixture());
+        float mass = this.chemicalBag.ExactMass();
+        GameObject newMeat = Instantiate(meat, transform.position, transform.rotation, transform.parent);
+        newMeat.GetComponent<ChemicalBag>().initialMass = new SubstanceMass[] { new SubstanceMass() { substance = MEAT, mass = mass } };
         Destroy(gameObject);
     }
 }

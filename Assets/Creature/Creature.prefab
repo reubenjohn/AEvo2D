@@ -4872,7 +4872,7 @@ MonoBehaviour:
   - substance: 21
     mass: 0.001
   - substance: 23
-    mass: 0.006
+    mass: 0.004
 --- !u!114 &3720227350534106200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5204,6 +5204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chemicalBag: {fileID: 0}
+  meat: {fileID: 4652864960900804521, guid: 0312d7255d3f9c8418b5f2e85e238905, type: 3}
   inheritedName: 
 --- !u!1 &4950129116005294841
 GameObject:

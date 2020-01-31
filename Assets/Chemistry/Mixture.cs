@@ -130,7 +130,7 @@ public class Flask : Mixture
     {
     }
 
-    private bool Take(Mixture b)
+    public bool Take(Mixture b)
     {
         if (!this.MassesGreaterThanEqualTo(b))
             return false;
@@ -139,7 +139,7 @@ public class Flask : Mixture
         return true;
     }
 
-    private void Put(Mixture b)
+    public void Put(Mixture b)
     {
         foreach (var substance in b.Keys)
             this[substance] = b[substance] + (this.contents.ContainsKey(substance) ? this[substance] : 0);
@@ -159,7 +159,7 @@ public class Flask : Mixture
         .Min();
     }
 
-    internal float Convert(Reaction reaction, float convertionFactor = 1f)
+    public float Convert(Reaction reaction, float convertionFactor = 1f)
     {
         System.Diagnostics.Trace.Assert(0 <= convertionFactor && convertionFactor <= 1f, "Reactions convertion factor must lie in range [0, 1]");
         float yield = MaxYield(this, reaction.ingredients) * convertionFactor;
