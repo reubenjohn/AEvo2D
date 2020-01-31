@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ChemicalBagSensor : MonoBehaviour, ISensor
@@ -25,6 +27,13 @@ public class ChemicalBagSensor : MonoBehaviour, ISensor
 
     public float[] GetReceptors() => receptors;
 
+    public IEnumerable<string> GetLabels()
+    {
+        IEnumerable<string> labels = senseMass ? new List<string>() { "Mass" } : new List<string>();
+        labels = labels.Union(substanceReceptors.Select(substance => substance.ToString()));
+        return labels;
+    }
+
     public void OnRefresh()
     {
         int i = 0;
@@ -35,5 +44,4 @@ public class ChemicalBagSensor : MonoBehaviour, ISensor
     }
 
     public void OnReset() => Array.Clear(receptors, 0, receptors.Length);
-
 }

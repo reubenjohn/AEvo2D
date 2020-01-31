@@ -47,6 +47,8 @@ public class ChemicalActuator : MonoBehaviour, IActuator
         // Debug.Log(gameObject.name + " choosen recipe yields: " + chosenRecipes.Zip(chosenRecipeYields, (recipe, yield) => recipe.ToString() + "(" + yield + ")").ToString<string>());
     }
 
+    public IEnumerable<string> GetLabels() => recipes.Select(recipe => recipe.ToString());
+
     public int InputCount => recipes.Length;
 
 }

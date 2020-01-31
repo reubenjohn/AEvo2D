@@ -7,4 +7,5 @@ public interface IActuator
 {
     int InputCount { get; }
     void Act(ArraySegment<float> activations);
+    IEnumerable<string> GetLabels();
 }

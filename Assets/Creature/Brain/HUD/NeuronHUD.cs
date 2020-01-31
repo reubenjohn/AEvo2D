@@ -11,16 +11,19 @@ public class NeuronHUD : MonoBehaviour
     public Color fromColor = Color.blue, toColor = Color.red;
 
     public float activation = 0.5f;
+    public string label = "-";
     public float[] weights;
 
     private Image neuronImage;
     private Text activationText;
+    private Text labelText;
 
     // Start is called before the first frame update
     void Start()
     {
         neuronImage = GetComponent<Image>();
         activationText = transform.Find("Activation").GetComponent<Text>();
+        labelText = transform.Find("Label").GetComponent<Text>();
         ResetWhenReady();
     }
 
@@ -59,6 +62,7 @@ public class NeuronHUD : MonoBehaviour
     {
         neuronImage.color = Color.Lerp(fromColor, toColor, activation.SignedToUnsignUnitFraction());
         activationText.text = activation.ToString("0.00");
+        labelText.text = label;
         if (weights.Length > 0)
         {
             Image[] lines = connectionsTransform.GetComponentsInChildren<Image>();

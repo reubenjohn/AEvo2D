@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public abstract class Brain : MonoBehaviour
 {
-    private ISensor[] sensors;
-    private IActuator[] actuators;
+    protected ISensor[] sensors;
+    protected IActuator[] actuators;
 
 
     private bool hudUpdateRequired = true;
@@ -45,6 +46,14 @@ public abstract class Brain : MonoBehaviour
         this.hudUpdateRequired = false;
         return updateRequired;
     }
+
+    public IEnumerable<string> GetSensorLabels()
+    {
+        foreach (var sensor in sensors)
+            sensor.GetLabels();
+        return sensors.SelectMany(sensor => sensor.GetLabels());
+    }
+    public IEnumerable<string> GetActuatorLabels() => actuators.SelectMany(actuator => actuator.GetLabels());
 
     public abstract void Build(int nInputs, int nOutputs);
 

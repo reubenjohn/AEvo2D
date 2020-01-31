@@ -46,4 +46,5 @@ public class Nose : MonoBehaviour, ISensor
 
     public void OnReset() => Array.Clear(receptors, 0, receptors.Length);
 
+    public IEnumerable<string> GetLabels() => environment.odorousSubstances.Select(substance => name + ": " + substance.ToString());
 }
