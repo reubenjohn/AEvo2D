@@ -54,6 +54,11 @@ public class ChemicalBag : MonoBehaviour
         return Transfer(destination, source, transferMixture * maxYield);
     }
 
+    public static float[] TransferMax(ChemicalBag destination, ChemicalBag source, params Mixture[] transferMixtures)
+    {
+        return transferMixtures.Select(transferMix => TransferMax(destination, source, transferMix)).ToArray();
+    }
+
     public static float Transfer(ChemicalBag destination, ChemicalBag source, Mixture transferMixture)
     {
         if (Flask.Transfer(destination.flask, source.flask, transferMixture))

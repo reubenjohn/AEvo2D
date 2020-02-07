@@ -6,12 +6,11 @@ public class Creature : MonoBehaviour
 {
     private Environment environment;
     private Rigidbody2D rb;
-    public ChemicalBag chemicalBag;
+    public ChemicalBag ChemicalBag { get; private set; }
     private EggPouch eggPouch;
     private Brain brainConnection;
 
     [SerializeField] public GameObject meat;
-    [SerializeField] public string inheritedName;
 
     public static readonly Mixture WASTE_MIX = new MixtureDictionary { [Substance.WASTE] = 1f }.ToMixture();
 
@@ -30,14 +29,12 @@ public class Creature : MonoBehaviour
 
         Transform body = transform.Find("Body");
         rb = body.GetComponent<Rigidbody2D>();
-        chemicalBag = body.GetComponent<ChemicalBag>();
+        ChemicalBag = body.GetComponent<ChemicalBag>();
 
         eggPouch = GetComponentInChildren<EggPouch>();
 
         this.brainConnection = GetComponentInChildren<Brain>();
         this.brainConnection.Connect(GetComponentsInChildren<ISensor>(), GetComponentsInChildren<IActuator>());
-
-        inheritedName = string.IsNullOrEmpty(inheritedName) ? gameObject.name : inheritedName;
     }
 
     // Update is called once per frame
@@ -48,14 +45,14 @@ public class Creature : MonoBehaviour
             brainConnection.Act();
 
             foreach (var recipe in alwaysActiveRecipes)
-                chemicalBag.Convert(recipe);
+                ChemicalBag.Convert(recipe);
 
-            rb.AddTorque((chemicalBag.Convert(Recipe.TURN_RIGHT) - chemicalBag.Convert(Recipe.TURN_LEFT)) * environment.torqueImpulse, ForceMode2D.Impulse);
-            rb.AddForce(rb.transform.up * chemicalBag.Convert(Recipe.JET_FORWARD) * environment.fuelImpulse, ForceMode2D.Impulse);
+            rb.AddTorque((ChemicalBag.Convert(Recipe.TURN_RIGHT) - ChemicalBag.Convert(Recipe.TURN_LEFT)) * environment.torqueImpulse, ForceMode2D.Impulse);
+            rb.AddForce(rb.transform.up * ChemicalBag.Convert(Recipe.JET_FORWARD) * environment.fuelImpulse, ForceMode2D.Impulse);
 
-            if (chemicalBag[WASTE] > environment.minimumGlobuleMass)
+            if (ChemicalBag[WASTE] > environment.minimumGlobuleMass)
             {
-                ChemicalBag.TransferMax(environment.chemicalBag, chemicalBag, WASTE_MIX);
+                ChemicalBag.TransferMax(environment.chemicalBag, ChemicalBag, WASTE_MIX);
             }
 
             if (SkinThickness() < environment.minSkinThickness)
@@ -65,15 +62,15 @@ public class Creature : MonoBehaviour
 
     private float SkinThickness()
     {
-        float skinArea = chemicalBag.ApproximateMass / environment.massDensity;
-        float bodyArea = (chemicalBag.ApproximateMass - chemicalBag[SKIN]) / environment.massDensity;
+        float skinArea = ChemicalBag.ApproximateMass / environment.massDensity;
+        float bodyArea = (ChemicalBag.ApproximateMass - ChemicalBag[SKIN]) / environment.massDensity;
         return Mathf.Sqrt(skinArea) - Mathf.Sqrt(bodyArea);
     }
 
     private void Die()
     {
         Debug.Log(gameObject.name + " died");
-        float mass = this.chemicalBag.ExactMass();
+        float mass = this.ChemicalBag.ExactMass();
         GameObject newMeat = Instantiate(meat, transform.position, transform.rotation, transform.parent);
         newMeat.GetComponent<ChemicalBag>().initialMass = new SubstanceMass[] { new SubstanceMass() { substance = MEAT, mass = mass } };
         Destroy(gameObject);

@@ -24,6 +24,17 @@ public class SubstanceMass
 public static class SubstanceMassUtilities
 {
     public static float TotalMass(this SubstanceMass[] substanceMasses) => substanceMasses.Sum(substanceMass => substanceMass.mass);
+
+    public static void ScaleTo(this SubstanceMass[] substanceMasses, float targetMass)
+    {
+        substanceMasses.ScaleBy(targetMass / substanceMasses.TotalMass());
+    }
+
+    public static void ScaleBy(this SubstanceMass[] substanceMasses, float scaleFactor)
+    {
+        foreach (var subtanceMass in substanceMasses)
+            subtanceMass.mass *= scaleFactor;
+    }
 }
 
 

@@ -35,15 +35,10 @@ public class RecurrentShallowBrain : Brain, IBrainViewable
 
         Tensor1DHUD inputLayer = layersTransform.GetChild(0).GetComponent<Tensor1DHUD>();
         inputLayer.NeuronCount = GetInputActivations().Length;
-        LabelNeurons(inputLayer, GetSensorLabels());
         inputLayer.GetComponentsInChildren<NeuronHUD>().Zip(GetSensorLabels(), (neuron, label) => neuron.label = label).Count();
         GameObject outputLayer = layersTransform.GetChild(1).gameObject;
         reccurrentNode.ResetHUD(outputLayer);
         outputLayer.GetComponentsInChildren<NeuronHUD>().Zip(GetActuatorLabels(), (neuron, label) => neuron.label = label).Count();
-    }
-
-    private void LabelNeurons(Tensor1DHUD inputLayer, IEnumerable<string> enumerable)
-    {
     }
 
     public override bool UpdateHUD(GameObject brainHudGameObject)
